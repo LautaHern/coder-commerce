@@ -14,7 +14,7 @@ A simple and lame attempt to create an e-commerce with retro style
 
 ## Instalación
 
-Instalar coder-commer con npm
+Install coder-commer with npm
 
 ```bash
 
