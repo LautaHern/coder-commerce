@@ -1,17 +1,19 @@
 import './itemDetail.css';
+
+import React, { useState } from 'react';
+import { useCartContext } from '../../context/CartContext';
 import ItemCount from '../ItemCount';
 import { Link } from 'react-router-dom';
 
-import React, {useState} from 'react';
-
 export const ItemDetail = ({data}) => {
+    const  [goToCart, setGoToCart] = useState(false);
+    const { addProduct } = useCartContext();
 
-  const  [goToCart, setGoToCart] = useState(false);
-
-  const onAdd = (quantity) => {
-    setGoToCart(true);
-  }
-
+    const onAdd = (quantity) => {
+        setGoToCart(true);
+        addProduct(data, quantity);
+    }
+  
   return (
     <div className='container'>
       <div className='detail'>
@@ -22,7 +24,7 @@ export const ItemDetail = ({data}) => {
           {
             goToCart
               ? <Link to='/cart'>Terminar compra</Link>
-              : <ItemCount initial={1} stock={5} onAdd={onAdd}/>
+              : <ItemCount initial={1} stock={5} onAdd={onAdd} />
           }
         </div>
       </div>
