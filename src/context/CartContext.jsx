@@ -31,6 +31,10 @@ const CartProvider = ({ children }) => {
 
     const removeProduct = (id) => setCart(cart.filter(product => product.id !== id));
 
+    const deleteAll = () => {
+        setCart([]);
+    };
+
     return (
         <CartContext.Provider value={{
             clearCart,
@@ -39,7 +43,8 @@ const CartProvider = ({ children }) => {
             addProduct,
             totalPrice,
             totalProducts,
-            cart
+            cart,
+            deleteAll
         }}>
             {children}
         </CartContext.Provider>
