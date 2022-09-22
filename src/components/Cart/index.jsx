@@ -10,7 +10,7 @@ const Cart = () => {
     return(
       <div className='text-center'>
         <p>No hay elementos en el carrito</p>
-        <Link className='text-white' to='/'>Hacer compras</Link>
+        <Link className='btn btn-dark text-white rounded-pill' to='/'>Hacer compras</Link>
       </div>
     )
   }
@@ -24,8 +24,8 @@ const Cart = () => {
         <p className='h3'>
         Total: $ {totalPrice()}
       </p>
-      <Link className='text-white' to='/'>Seguir comprando</Link><br></br><br></br>
-      <button className='text-dark px-2' onClick={deleteAll}>Vaciar carrito</button>
+      <Link className='btn btn-dark text-white rounded-pill' to='/'>Seguir comprando</Link><br></br><br></br>
+      <button className='btn btn-dark text-white rounded-pill' onClick={deleteAll}>Vaciar carrito</button>
       </div>
       
     </>

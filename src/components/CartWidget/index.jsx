@@ -5,8 +5,8 @@ export const CartWidget = () => {
 const {totalProducts} = useCartContext();
     return (
       <>
-        <i className="bi bi-minecart text-dark"></i>
-        <span className='h5 mx-auto px-2 text-dark' >{totalProducts() || ''}</span>
+        <i className="bi bi-minecart"></i>
+        <span className='h5 mx-auto px-2' >{totalProducts() || ''}</span>
       </>
     );
 }

@@ -18,7 +18,8 @@
 
 body {
     margin: 25px;
-    background-image: radial-gradient( rgb(0, 0, 0),rgb(52, 24, 103),rgb(173, 35, 186));
+    background-image: radial-gradient( rgb(0, 0, 0),rgb(34, 10, 62));
+    text-align: center;
 }
 
 .pp {
