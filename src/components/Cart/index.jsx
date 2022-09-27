@@ -14,7 +14,8 @@ const Cart = () => {
         phone: '255345',
         address: '742 Evergreen Terrace'
       },
-      items: cart.map(product => ({id: product.id, title: product.title, price: product.price, quantity: product.quantity})), 
+      items: cart.map(product => ({id: product.id, title: product.title, price: product.price, quantity: product.quantity})),
+      date: new Date(),
       total: totalPrice(),
   }
 
@@ -25,6 +26,7 @@ const Cart = () => {
       .then(({ id }) => (
         alert(`
         Id de compra Nº ${ id }
+        Fecha: ${order.date}
         Nombre: ${order.buyer.name}
         Email: ${order.buyer.email}
         Teléfono: ${order.buyer.phone}
