@@ -1,5 +1,6 @@
 import { addDoc, collection, getFirestore } from 'firebase/firestore';
 import React from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCartContext } from '../../context/CartContext';
 import ItemCart from '../ItemCart';
@@ -7,12 +8,17 @@ import ItemCart from '../ItemCart';
 const Cart = () => {
   const { cart, totalPrice, deleteAll, totalProducts } = useCartContext();
 
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [address, setAddress] = useState('');
+
   const order = {
       buyer: {
-        name: 'Lalo Landa',
-        email: 'lalo@coder.com.ar',
-        phone: '255345',
-        address: '742 Evergreen Terrace'
+        name: name,
+        email: email,
+        phone: phone,
+        address: address 
       },
       items: cart.map(product => ({id: product.id, title: product.title, price: product.price, quantity: product.quantity})),
       date: new Date(),
@@ -47,16 +53,25 @@ const Cart = () => {
 
   return (
     <>
-      {
-       cart.map(product => <ItemCart key={product.id} product={product} />) 
-      }
-      <div className='text-center'>
-        <p className='h3'>
-        Total: $ {totalPrice()}
-      </p>
-      <button className='btn btn-dark border text-white rounded-pill' onClick={handleClick}>Comprar</button>
-      <Link className='btn btn-dark text-white rounded-pill' to='/'>Seguir comprando</Link>
-      <button className='btn btn-dark text-white rounded-pill' onClick={deleteAll}>Vaciar carrito</button>
+      <div>
+        {
+        cart.map(product => <ItemCart key={product.id} product={product} />) 
+        }
+        <div className='text-center'>
+          <p className='h3'>
+          Total: $ {totalPrice()}
+        </p>
+        </div>
+      </div>
+      <br />
+      <div>
+        <input type="text" placeholder='Nombre' value={name} onInput={(e) => setName(e.target.value)}/><br />
+        <input type="text" placeholder='Email'value={email} onInput={(e) => setEmail(e.target.value)}/><br />
+        <input type="text" placeholder='Teléfono'value={phone} onInput={(e) => setPhone(e.target.value)}/><br />
+        <input type="text" placeholder='Dirección'value={address} onInput={(e) => setAddress(e.target.value)}/><br />
+        <button className='btn btn-dark border text-white rounded-pill' onClick={handleClick}>Comprar</button>
+        <Link className='btn btn-dark text-white rounded-pill' to='/'>Seguir comprando</Link>
+        <button className='btn btn-dark text-white rounded-pill' onClick={deleteAll}>Vaciar carrito</button>
       </div>
       
     </>
