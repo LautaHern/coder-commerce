@@ -26,27 +26,33 @@ const Cart = () => {
   }
 
   const handleClick = ()=> {
-    const db = getFirestore();
-    const orderCollection = collection(db, 'orders');
-    addDoc(orderCollection, order)
-      .then(({ id }) => (
-        alert(`
-        Id de compra Nº ${ id }
-        Fecha: ${order.date}
-        Nombre: ${order.buyer.name}
-        Email: ${order.buyer.email}
-        Teléfono: ${order.buyer.phone}
-        Dirección: ${order.buyer.address}
-        Items: ${totalProducts()}
-        Total: $${order.total}
-        ¡Muchas gracias por confiar en nosotros!`)))
+    if (name !== '' && email !== '' && !isNaN(phone) && address !== '') {
+      const db = getFirestore();
+      const orderCollection = collection(db, 'orders');
+      addDoc(orderCollection, order)
+        .then(({ id }) => (
+          alert(`
+          Id de compra Nº ${ id }
+          Fecha: ${order.date}
+          Nombre: ${order.buyer.name}
+          Email: ${order.buyer.email}
+          Teléfono: ${order.buyer.phone}
+          Dirección: ${order.buyer.address}
+          Items: ${totalProducts()}
+          Total: $${order.total}
+          ¡Muchas gracias por confiar en nosotros!`)),
+          deleteAll()
+          )
+    } else {
+      alert('Complete los campos requeridos para confirmar la compra')
+    }
   }
 
   if (cart.length === 0) {
     return(
       <div className='text-center'>
         <p>No hay elementos en el carrito</p>
-        <Link className='btn btn-dark text-white rounded-pill' to='/'>Hacer compras</Link>
+        <Link className='btn btn-dark text-white rounded-pill' to='/'>Ir al inicio</Link>
       </div>
     )
   }
@@ -65,11 +71,11 @@ const Cart = () => {
       </div>
       <br />
       <div>
-        <input type="text" placeholder='Nombre' value={name} onInput={(e) => setName(e.target.value)}/><br />
-        <input type="text" placeholder='Email'value={email} onInput={(e) => setEmail(e.target.value)}/><br />
-        <input type="text" placeholder='Teléfono'value={phone} onInput={(e) => setPhone(e.target.value)}/><br />
-        <input type="text" placeholder='Dirección'value={address} onInput={(e) => setAddress(e.target.value)}/><br />
-        <button className='btn btn-dark border text-white rounded-pill' onClick={handleClick}>Comprar</button>
+        <input type="text" required placeholder='Nombre' value={name} size="50" onChange={(e) => setName(e.target.value)}/><br />
+        <input type="text" required placeholder='Email' value={email} size="50" onChange={(e) => setEmail(e.target.value)}/><br />
+        <input type="text" required placeholder='Teléfono' value={phone} size="50" onChange={(e) => setPhone(e.target.value)}/><br />
+        <input type="text" required placeholder='Dirección' value={address} size="50" onChange={(e) => setAddress(e.target.value)}/><br />
+        <button className='btn btn-dark border text-white rounded-pill' onClick={handleClick}>Comprar</button><br /><br />
         <Link className='btn btn-dark text-white rounded-pill' to='/'>Seguir comprando</Link>
         <button className='btn btn-dark text-white rounded-pill' onClick={deleteAll}>Vaciar carrito</button>
       </div>
