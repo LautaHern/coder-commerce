@@ -5,8 +5,10 @@ import { Link } from 'react-router-dom';
 import { useCartContext } from '../../context/CartContext';
 import ItemCart from '../ItemCart';
 
+import Swal from 'sweetalert2'
+
 const Cart = () => {
-  const { cart, totalPrice, deleteAll, totalProducts } = useCartContext();
+  const { cart, totalPrice, deleteAll, totalProducts} = useCartContext();
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -27,12 +29,19 @@ const Cart = () => {
 
   const handleClick = ()=> {
     if (name !== '' && email !== '' && !isNaN(phone) && address !== '') {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Tu compra está siendo procesada',
+        showConfirmButton: false,
+        timer: 2500
+      })
       const db = getFirestore();
       const orderCollection = collection(db, 'orders');
       addDoc(orderCollection, order)
         .then(({ id }) => (
-          alert(`
-          Id de compra Nº ${ id }
+          Swal.fire(
+          `Id de compra Nº ${ id }
           Fecha: ${order.date}
           Nombre: ${order.buyer.name}
           Email: ${order.buyer.email}
@@ -40,11 +49,16 @@ const Cart = () => {
           Dirección: ${order.buyer.address}
           Items: ${totalProducts()}
           Total: $${order.total}
-          ¡Muchas gracias por confiar en nosotros!`)),
+          ¡Muchas gracias por confiar en nosotros!`
+          ))
+          ,
           deleteAll()
           )
     } else {
-      alert('Complete los campos requeridos para confirmar la compra')
+      Swal.fire(
+        'Atención',
+        'Debe ingresar correctamente sus datos para finalizar la compra'
+      )
     }
   }
 
